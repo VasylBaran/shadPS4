@@ -35,6 +35,7 @@ private slots:
 private:
     void validateAndSaveKeyBindings();
     SDL_Keycode convertQtKeyToSDL(Qt::Key qtKey);
+    void centerText();
     Qt::Key convertSDLKeyToQt(SDL_Keycode qtKey);
 
     Ui::KeyboardControlsWindow* ui;
