@@ -6,7 +6,7 @@
 #include <QDialog>
 #include <QSettings>
 
-#include "keys_constants.h"
+#include "input/keys_constants.h"
 #include <SDL3/SDL_keycode.h>
 
 #include <QMap>

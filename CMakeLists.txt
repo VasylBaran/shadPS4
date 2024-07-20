@@ -468,6 +468,9 @@ set(VIDEO_CORE src/video_core/amdgpu/liverpool.cpp
 
 set(INPUT src/input/controller.cpp
           src/input/controller.h
+          src/input/keysmappingprovider.h 
+          src/input/keysmappingprovider.cpp
+          src/input/keys_constants.h
 )
 
 set(EMULATOR src/emulator.cpp
@@ -523,8 +526,6 @@ if (ENABLE_QT_GUI)
         ${SHADER_RECOMPILER}
         ${VIDEO_CORE}
         ${EMULATOR}
-        keysmappingprovider.h keysmappingprovider.cpp
-        keys_constants.h
     )
 else()
     add_executable(shadps4

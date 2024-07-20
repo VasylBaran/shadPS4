@@ -1,4 +1,4 @@
-#include "keysmappingprovider.h"
+#include "input/keysmappingprovider.h"
 
 KeysMappingProvider::KeysMappingProvider(std::map<Uint32, KeysMapping> bindingsMap)
 : m_bindingsMap{bindingsMap}

@@ -10,7 +10,7 @@
 #include "core/linker.h"
 #include "input/controller.h"
 #include "sdl_window.h"
-#include "keysmappingprovider.h"
+#include "input/keysmappingprovider.h"
 
 namespace Core {
 

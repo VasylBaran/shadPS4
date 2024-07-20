@@ -4,7 +4,7 @@
 #pragma once
 
 #include "common/types.h"
-#include "keysmappingprovider.h"
+#include "input/keysmappingprovider.h"
 
 struct SDL_Window;
 union SDL_Event;

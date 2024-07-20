@@ -6,7 +6,7 @@
 #include <map>
 #include <optional>
 
-#include "keys_constants.h"
+#include "input/keys_constants.h"
 
 class KeysMappingProvider
 {
