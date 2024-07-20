@@ -26,6 +26,8 @@ KeyboardControlsWindow::KeyboardControlsWindow(QWidget* parent)
     : QDialog(parent), ui(new Ui::KeyboardControlsWindow), m_settings("ShadPS4_Corp", "ShadPS4") {
     ui->setupUi(this);
 
+    centerText();
+
     qRegisterMetaType<QKeyBindingsQMap>();
 
     auto keysSettingsMap = m_settings.value(keyBindingsSettingsKey).value<QKeyBindingsQMap>();
@@ -593,5 +595,26 @@ void KeyboardControlsWindow::onEditingFinished() {
                 keyEdit->setStyleSheet(""); // Reset to default
             });
         }
+    }
+    centerText();
+}
+
+void KeyboardControlsWindow::centerText() {
+    QList<QKeySequenceEdit*> keySequenceEdits = {
+        ui->StartKeySequenceEdit,        ui->SelectKeySequenceEdit,
+        ui->LAnalogDownkeySequenceEdit,  ui->LAnalogLeftkeySequenceEdit,
+        ui->LAnalogUpkeySequenceEdit,    ui->LAnalogRightkeySequenceEdit,
+        ui->PSkeySequenceEdit,           ui->RAnalogDownkeySequenceEdit,
+        ui->RAnalogLeftkeySequenceEdit,  ui->RAnalogUpkeySequenceEdit,
+        ui->RAnalogRightkeySequenceEdit, ui->DPadLeftkeySequenceEdit,
+        ui->DPadRightkeySequenceEdit,    ui->DPadUpkeySequenceEdit,
+        ui->DPadDownkeySequenceEdit,     ui->L2keySequenceEdit,
+        ui->L1keySequenceEdit,           ui->CrossKeySequenceEdit,
+        ui->R2KeySequenceEdit,           ui->CircleKeySequenceEdit,
+        ui->R1KeySequenceEdit,           ui->SquareKeySequenceEdit,
+        ui->TriangleKeySequenceEdit};
+
+    for (auto edit : keySequenceEdits) {
+        edit->setStyleSheet("QLineEdit { qproperty-alignment: AlignCenter; }");
     }
 }
