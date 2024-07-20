@@ -20,10 +20,10 @@
 #include "game_info.h"
 #include "game_list_frame.h"
 #include "game_list_utils.h"
+#include "keyboardcontrolswindow.h"
 #include "main_window_themes.h"
 #include "main_window_ui.h"
 #include "pkg_viewer.h"
-#include "keyboardcontrolswindow.h"
 
 class GameListFrame;
 

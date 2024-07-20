@@ -9,8 +9,8 @@
 #include <common/singleton.h>
 #include "core/linker.h"
 #include "input/controller.h"
-#include "sdl_window.h"
 #include "input/keysmappingprovider.h"
+#include "sdl_window.h"
 
 namespace Core {
 

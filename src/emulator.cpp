@@ -143,8 +143,7 @@ void Emulator::Run(const std::filesystem::path& file) {
     std::exit(0);
 }
 
-void Emulator::setKeysMappingProvider(std::unique_ptr<KeysMappingProvider> provider)
-{
+void Emulator::setKeysMappingProvider(std::unique_ptr<KeysMappingProvider> provider) {
     m_keysMappingProvider = std::move(provider);
     window.setKeysMappingProvider(m_keysMappingProvider.get());
 }

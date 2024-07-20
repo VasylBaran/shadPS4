@@ -88,7 +88,8 @@ void MainWindow::AddUiWidgets() {
     ui->toolBar->addWidget(ui->stopButton);
     ui->toolBar->addWidget(ui->settingsButton);
     ui->toolBar->addWidget(ui->controllerButton);
-    auto connection = QObject::connect(ui->keyboardButton, &QPushButton::clicked, this, &MainWindow::keyboardConfigurationButtonPressed);
+    auto connection = QObject::connect(ui->keyboardButton, &QPushButton::clicked, this,
+                                       &MainWindow::keyboardConfigurationButtonPressed);
 
     ui->toolBar->addWidget(ui->keyboardButton);
     QFrame* line = new QFrame(this);
@@ -99,8 +100,7 @@ void MainWindow::AddUiWidgets() {
     ui->toolBar->addWidget(ui->mw_searchbar);
 }
 
-void MainWindow::keyboardConfigurationButtonPressed()
-{
+void MainWindow::keyboardConfigurationButtonPressed() {
     m_keyboardControlsDialog->show();
 }
 
@@ -210,7 +210,8 @@ void MainWindow::CreateConnects() {
         if (gamePath != "") {
             AddRecentFiles(gamePath);
             Core::Emulator emulator;
-            emulator.setKeysMappingProvider(std::make_unique<KeysMappingProvider>(getKeysMapping()));
+            emulator.setKeysMappingProvider(
+                std::make_unique<KeysMappingProvider>(getKeysMapping()));
             emulator.Run(gamePath.toUtf8().constData());
         }
     });
@@ -588,8 +589,7 @@ void MainWindow::InstallDirectory() {
     dlg.exec();
 }
 
-std::map<Uint32, KeysMapping> MainWindow::getKeysMapping()
-{
+std::map<Uint32, KeysMapping> MainWindow::getKeysMapping() {
     return m_keyboardControlsDialog->getKeysMapping();
 }
 

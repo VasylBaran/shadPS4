@@ -1,13 +1,13 @@
 #ifndef KEYBOARDCONTROLSWINDOW_H
 #define KEYBOARDCONTROLSWINDOW_H
 
-#include <QMainWindow>
-#include <QKeySequenceEdit>
 #include <QDialog>
+#include <QKeySequenceEdit>
+#include <QMainWindow>
 #include <QSettings>
 
-#include "input/keys_constants.h"
 #include <SDL3/SDL_keycode.h>
+#include "input/keys_constants.h"
 
 #include <QMap>
 
@@ -20,12 +20,11 @@ class KeyboardControlsWindow;
 }
 QT_END_NAMESPACE
 
-class KeyboardControlsWindow : public QDialog
-{
+class KeyboardControlsWindow : public QDialog {
     Q_OBJECT
 
 public:
-    KeyboardControlsWindow(QWidget *parent = nullptr);
+    KeyboardControlsWindow(QWidget* parent = nullptr);
     ~KeyboardControlsWindow();
 
     std::map<Uint32, KeysMapping> getKeysMapping();
@@ -38,7 +37,7 @@ private:
     SDL_Keycode convertQtKeyToSDL(Qt::Key qtKey);
     Qt::Key convertSDLKeyToQt(SDL_Keycode qtKey);
 
-    Ui::KeyboardControlsWindow *ui;
+    Ui::KeyboardControlsWindow* ui;
     QSet<QKeySequenceEdit*> m_listOfKeySequenceEdits;
     std::map<Uint32, KeysMapping> m_keysMap;
     std::map<KeysMapping, Uint32> m_reverseKeysMap;

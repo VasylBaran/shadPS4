@@ -91,8 +91,7 @@ void WindowSDL::waitEvent() {
     }
 }
 
-void WindowSDL::setKeysMappingProvider(KeysMappingProvider *provider)
-{
+void WindowSDL::setKeysMappingProvider(KeysMappingProvider* provider) {
     keysMappingProvider = provider;
 }
 
@@ -109,149 +108,145 @@ void WindowSDL::onKeyPress(const SDL_Event* event) {
     int ax = 0;
 
     bool keyHandlingPending = true;
-    if (keysMappingProvider != nullptr)
-    {
+    if (keysMappingProvider != nullptr) {
         auto ps4KeyOpt = keysMappingProvider->mapKey(event->key.key);
 
-        if (ps4KeyOpt.has_value()) 
-        {
+        if (ps4KeyOpt.has_value()) {
             keyHandlingPending = false;
 
             auto ps4Key = ps4KeyOpt.value();
-            switch (ps4Key) 
-            {
-                case KeysMapping::Start_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_OPTIONS;
-                    break;
+            switch (ps4Key) {
+            case KeysMapping::Start_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_OPTIONS;
+                break;
 
-                case KeysMapping::Triangle_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_TRIANGLE;
-                    break;
-                case KeysMapping::Circle_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_CIRCLE;
-                    break;
-                case KeysMapping::Cross_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_CROSS;
-                    break;
-                case KeysMapping::Square_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_SQUARE;
-                    break;
-                case KeysMapping::R1_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_R1;
-                    break;
-                case KeysMapping::R2_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_R2;
-                    axis = Input::Axis::TriggerRight;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 255;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(0, 0x80, axisvalue);
-                    break;
-                case KeysMapping::L1_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_L1;
-                    break;
-                case KeysMapping::L2_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_L2;
-                    axis = Input::Axis::TriggerLeft;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 255;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(0, 0x80, axisvalue);
-                    break;
-                case KeysMapping::DPadLeft_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_LEFT;
-                    break;
-                case KeysMapping::DPadRight_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_RIGHT;
-                    break;
-                case KeysMapping::DPadDown_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_DOWN;
-                    break;
-                case KeysMapping::DPadUp_Key:
-                    button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_UP;
-                    break;
-                case KeysMapping::LAnalogLeft_Key:
-                    axis = Input::Axis::LeftX;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += -127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::LAnalogRight_Key:
-                    axis = Input::Axis::LeftX;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::LAnalogUp_Key:
-                    axis = Input::Axis::LeftY;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += -127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::LAnalogDown_Key:
-                    axis = Input::Axis::LeftY;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::RAnalogLeft_Key:
-                    axis = Input::Axis::RightX;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += -127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::RAnalogRight_Key:
-                    axis = Input::Axis::RightX;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::RAnalogUp_Key:
-                    axis = Input::Axis::RightY;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += -127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
-                case KeysMapping::RAnalogDown_Key:
-                    axis = Input::Axis::RightY;
-                    if (event->type == SDL_EVENT_KEY_DOWN) {
-                        axisvalue += 127;
-                    } else {
-                        axisvalue = 0;
-                    }
-                    ax = Input::GetAxis(-0x80, 0x80, axisvalue);
-                    break;
+            case KeysMapping::Triangle_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_TRIANGLE;
+                break;
+            case KeysMapping::Circle_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_CIRCLE;
+                break;
+            case KeysMapping::Cross_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_CROSS;
+                break;
+            case KeysMapping::Square_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_SQUARE;
+                break;
+            case KeysMapping::R1_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_R1;
+                break;
+            case KeysMapping::R2_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_R2;
+                axis = Input::Axis::TriggerRight;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 255;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(0, 0x80, axisvalue);
+                break;
+            case KeysMapping::L1_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_L1;
+                break;
+            case KeysMapping::L2_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_L2;
+                axis = Input::Axis::TriggerLeft;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 255;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(0, 0x80, axisvalue);
+                break;
+            case KeysMapping::DPadLeft_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_LEFT;
+                break;
+            case KeysMapping::DPadRight_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_RIGHT;
+                break;
+            case KeysMapping::DPadDown_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_DOWN;
+                break;
+            case KeysMapping::DPadUp_Key:
+                button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_UP;
+                break;
+            case KeysMapping::LAnalogLeft_Key:
+                axis = Input::Axis::LeftX;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += -127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::LAnalogRight_Key:
+                axis = Input::Axis::LeftX;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::LAnalogUp_Key:
+                axis = Input::Axis::LeftY;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += -127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::LAnalogDown_Key:
+                axis = Input::Axis::LeftY;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::RAnalogLeft_Key:
+                axis = Input::Axis::RightX;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += -127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::RAnalogRight_Key:
+                axis = Input::Axis::RightX;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::RAnalogUp_Key:
+                axis = Input::Axis::RightY;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += -127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
+            case KeysMapping::RAnalogDown_Key:
+                axis = Input::Axis::RightY;
+                if (event->type == SDL_EVENT_KEY_DOWN) {
+                    axisvalue += 127;
+                } else {
+                    axisvalue = 0;
+                }
+                ax = Input::GetAxis(-0x80, 0x80, axisvalue);
+                break;
             }
         }
     }
-    
-    if (keyHandlingPending)
-    {
+
+    if (keyHandlingPending) {
         switch (event->key.key) {
         case SDLK_UP:
             button = OrbisPadButtonDataOffset::ORBIS_PAD_BUTTON_UP;

@@ -1,8 +1,7 @@
 #ifndef KEYS_CONSTANTS_H
 #define KEYS_CONSTANTS_H
 
-enum KeysMapping
-{
+enum KeysMapping {
     Start_Key = 0,
     Select_Key,
     LAnalogDown_Key,

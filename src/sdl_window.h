@@ -61,7 +61,7 @@ public:
 
     void waitEvent();
 
-    void setKeysMappingProvider(KeysMappingProvider *provider);
+    void setKeysMappingProvider(KeysMappingProvider* provider);
 
 private:
     void onResize();
@@ -73,7 +73,7 @@ private:
     Input::GameController* controller;
     WindowSystemInfo window_info{};
     SDL_Window* window{};
-    KeysMappingProvider *keysMappingProvider = nullptr;
+    KeysMappingProvider* keysMappingProvider = nullptr;
     bool is_shown{};
     bool is_open{true};
 };

@@ -1,32 +1,29 @@
-#include "keyboardcontrolswindow.h"
 #include "./ui_keyboardcontrolswindow.h"
+#include "keyboardcontrolswindow.h"
 
 #include <QMessageBox>
 #include <QTimer>
 
 #include <iostream>
 
-namespace
-{
+namespace {
 static constexpr auto keyBindingsSettingsKey = "ShadPS4_Keyboard_Settings_KEY";
 }
 
-void showError(const QString &message) {
+void showError(const QString& message) {
     QMessageBox::critical(nullptr, "Error", message, QMessageBox::Ok);
 }
 
-void showWarning(const QString &message) {
+void showWarning(const QString& message) {
     QMessageBox::warning(nullptr, "Warning", message, QMessageBox::Ok);
 }
 
-void showInfo(const QString &message) {
+void showInfo(const QString& message) {
     QMessageBox::information(nullptr, "Info", message, QMessageBox::Ok);
 }
 
-KeyboardControlsWindow::KeyboardControlsWindow(QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::KeyboardControlsWindow)
-    , m_settings("ShadPS4_Corp", "ShadPS4") {
+KeyboardControlsWindow::KeyboardControlsWindow(QWidget* parent)
+    : QDialog(parent), ui(new Ui::KeyboardControlsWindow), m_settings("ShadPS4_Corp", "ShadPS4") {
     ui->setupUi(this);
 
     qRegisterMetaType<QKeyBindingsQMap>();
@@ -34,35 +31,57 @@ KeyboardControlsWindow::KeyboardControlsWindow(QWidget *parent)
     auto keysSettingsMap = m_settings.value(keyBindingsSettingsKey).value<QKeyBindingsQMap>();
     m_keysMap = keysSettingsMap.toStdMap();
 
-    for (auto& pair : m_keysMap)
-    {
+    for (auto& pair : m_keysMap) {
         m_reverseKeysMap.emplace(pair.second, pair.first);
         std::cout << pair.first << "-" << pair.second << std::endl;
     }
 
-    QObject::connect(ui->StartKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->SelectKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->LAnalogDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->LAnalogLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->LAnalogUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->LAnalogRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->PSkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->RAnalogDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->RAnalogLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->RAnalogUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->RAnalogRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->DPadLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->DPadRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->DPadUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->DPadDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->L2keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->L1keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->CrossKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->R2KeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->CircleKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->R1KeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->SquareKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
-    QObject::connect(ui->TriangleKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->StartKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->SelectKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->LAnalogDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->LAnalogLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->LAnalogUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->LAnalogRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->PSkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->RAnalogDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->RAnalogLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->RAnalogUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->RAnalogRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->DPadLeftkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->DPadRightkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->DPadUpkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->DPadDownkeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->L2keySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->L1keySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->CrossKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->R2KeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->CircleKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->R1KeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->SquareKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
+    QObject::connect(ui->TriangleKeySequenceEdit, &QKeySequenceEdit::editingFinished, this,
+                     &KeyboardControlsWindow::onEditingFinished);
 
     m_listOfKeySequenceEdits.insert(ui->StartKeySequenceEdit);
     m_listOfKeySequenceEdits.insert(ui->SelectKeySequenceEdit);
@@ -112,58 +131,68 @@ KeyboardControlsWindow::KeyboardControlsWindow(QWidget *parent)
     m_listOfKeySequenceEdits.insert(ui->SquareKeySequenceEdit);
     m_listOfKeySequenceEdits.insert(ui->TriangleKeySequenceEdit);
 
-    ui->StartKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Start_Key]));
-    ui->SelectKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Select_Key]));
-    ui->LAnalogDownkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogDown_Key]));
-    ui->LAnalogLeftkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogLeft_Key]));
-    ui->LAnalogUpkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogUp_Key]));
-    ui->LAnalogRightkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogRight_Key]));
+    ui->StartKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Start_Key]));
+    ui->SelectKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Select_Key]));
+    ui->LAnalogDownkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogDown_Key]));
+    ui->LAnalogLeftkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogLeft_Key]));
+    ui->LAnalogUpkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogUp_Key]));
+    ui->LAnalogRightkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::LAnalogRight_Key]));
     ui->PSkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::PS_Key]));
-    ui->RAnalogDownkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogDown_Key]));
-    ui->RAnalogLeftkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogLeft_Key]));
-    ui->RAnalogUpkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogUp_Key]));
-    ui->RAnalogRightkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogRight_Key]));
-    ui->DPadLeftkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadLeft_Key]));
-    ui->DPadRightkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadRight_Key]));
-    ui->DPadUpkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadUp_Key]));
-    ui->DPadDownkeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadDown_Key]));
+    ui->RAnalogDownkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogDown_Key]));
+    ui->RAnalogLeftkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogLeft_Key]));
+    ui->RAnalogUpkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogUp_Key]));
+    ui->RAnalogRightkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::RAnalogRight_Key]));
+    ui->DPadLeftkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadLeft_Key]));
+    ui->DPadRightkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadRight_Key]));
+    ui->DPadUpkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadUp_Key]));
+    ui->DPadDownkeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::DPadDown_Key]));
     ui->L2keySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::L2_Key]));
     ui->L1keySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::L1_Key]));
-    ui->CrossKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Cross_Key]));
+    ui->CrossKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Cross_Key]));
     ui->R2KeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::R2_Key]));
-    ui->CircleKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Circle_Key]));
+    ui->CircleKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Circle_Key]));
     ui->R1KeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::R1_Key]));
-    ui->SquareKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Square_Key]));
-    ui->TriangleKeySequenceEdit->setKeySequence(convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Triangle_Key]));
+    ui->SquareKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Square_Key]));
+    ui->TriangleKeySequenceEdit->setKeySequence(
+        convertSDLKeyToQt(m_reverseKeysMap[KeysMapping::Triangle_Key]));
 
-    QObject::connect(ui->applyButton, &QPushButton::clicked, [this]() {
-        validateAndSaveKeyBindings();
-    });
+    QObject::connect(ui->applyButton, &QPushButton::clicked,
+                     [this]() { validateAndSaveKeyBindings(); });
 
-    QObject::connect(ui->cancelButton, &QPushButton::clicked, [this]() {
-        this->close();
-    });
+    QObject::connect(ui->cancelButton, &QPushButton::clicked, [this]() { this->close(); });
 }
 
-KeyboardControlsWindow::~KeyboardControlsWindow()
-{
+KeyboardControlsWindow::~KeyboardControlsWindow() {
     delete ui;
 }
 
-std::map<Uint32, KeysMapping> KeyboardControlsWindow::getKeysMapping()
-{
+std::map<Uint32, KeysMapping> KeyboardControlsWindow::getKeysMapping() {
     return m_keysMap;
 }
 
-void KeyboardControlsWindow::validateAndSaveKeyBindings()
-{
+void KeyboardControlsWindow::validateAndSaveKeyBindings() {
     int nOfUnconfiguredButtons = 0;
-    for (auto &keyEdit : m_listOfKeySequenceEdits)
-    {
+    for (auto& keyEdit : m_listOfKeySequenceEdits) {
         auto keySequence = keyEdit->keySequence();
 
-        if (keySequence == QKeySequence())
-        {
+        if (keySequence == QKeySequence()) {
             keyEdit->setStyleSheet("background-color: red");
             QTimer::singleShot(2000, keyEdit, [keyEdit]() {
                 keyEdit->setStyleSheet(""); // Reset to default
@@ -171,11 +200,9 @@ void KeyboardControlsWindow::validateAndSaveKeyBindings()
 
             ++nOfUnconfiguredButtons;
         }
-
     }
 
-    if (nOfUnconfiguredButtons > 0)
-    {
+    if (nOfUnconfiguredButtons > 0) {
         showError("Some of the buttons were not configured");
         return;
     }
@@ -183,37 +210,59 @@ void KeyboardControlsWindow::validateAndSaveKeyBindings()
     m_keysMap.clear();
     m_reverseKeysMap.clear();
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogDownkeySequenceEdit->keySequence()[0].key()), KeysMapping::LAnalogDown_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogLeftkeySequenceEdit->keySequence()[0].key()), KeysMapping::LAnalogLeft_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogUpkeySequenceEdit->keySequence()[0].key()), KeysMapping::LAnalogUp_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogRightkeySequenceEdit->keySequence()[0].key()), KeysMapping::LAnalogRight_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogDownkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::LAnalogDown_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogLeftkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::LAnalogLeft_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogUpkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::LAnalogUp_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->LAnalogRightkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::LAnalogRight_Key);
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->PSkeySequenceEdit->keySequence()[0].key()), KeysMapping::PS_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->StartKeySequenceEdit->keySequence()[0].key()), KeysMapping::Start_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->SelectKeySequenceEdit->keySequence()[0].key()), KeysMapping::Select_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->PSkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::PS_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->StartKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Start_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->SelectKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Select_Key);
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogDownkeySequenceEdit->keySequence()[0].key()), KeysMapping::RAnalogDown_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogLeftkeySequenceEdit->keySequence()[0].key()), KeysMapping::RAnalogLeft_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogUpkeySequenceEdit->keySequence()[0].key()), KeysMapping::RAnalogUp_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogRightkeySequenceEdit->keySequence()[0].key()), KeysMapping::RAnalogRight_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogDownkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::RAnalogDown_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogLeftkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::RAnalogLeft_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogUpkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::RAnalogUp_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->RAnalogRightkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::RAnalogRight_Key);
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadLeftkeySequenceEdit->keySequence()[0].key()), KeysMapping::DPadLeft_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadRightkeySequenceEdit->keySequence()[0].key()), KeysMapping::DPadRight_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadUpkeySequenceEdit->keySequence()[0].key()), KeysMapping::DPadUp_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadDownkeySequenceEdit->keySequence()[0].key()), KeysMapping::DPadDown_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadLeftkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::DPadLeft_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadRightkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::DPadRight_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadUpkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::DPadUp_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->DPadDownkeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::DPadDown_Key);
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->L1keySequenceEdit->keySequence()[0].key()), KeysMapping::L1_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->L2keySequenceEdit->keySequence()[0].key()), KeysMapping::L2_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->R1KeySequenceEdit->keySequence()[0].key()), KeysMapping::R1_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->R2KeySequenceEdit->keySequence()[0].key()), KeysMapping::R2_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->L1keySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::L1_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->L2keySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::L2_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->R1KeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::R1_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->R2KeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::R2_Key);
 
-    m_keysMap.emplace(convertQtKeyToSDL(ui->CrossKeySequenceEdit->keySequence()[0].key()), KeysMapping::Cross_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->CircleKeySequenceEdit->keySequence()[0].key()), KeysMapping::Circle_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->SquareKeySequenceEdit->keySequence()[0].key()), KeysMapping::Square_Key);
-    m_keysMap.emplace(convertQtKeyToSDL(ui->TriangleKeySequenceEdit->keySequence()[0].key()), KeysMapping::Triangle_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->CrossKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Cross_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->CircleKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Circle_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->SquareKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Square_Key);
+    m_keysMap.emplace(convertQtKeyToSDL(ui->TriangleKeySequenceEdit->keySequence()[0].key()),
+                      KeysMapping::Triangle_Key);
 
-    for (auto& pair : m_keysMap) 
-    {
+    for (auto& pair : m_keysMap) {
         m_reverseKeysMap.emplace(pair.second, pair.first);
     }
 
@@ -372,10 +421,8 @@ Qt::Key KeyboardControlsWindow::convertSDLKeyToQt(SDL_Keycode sdlKey) {
     }
 }
 
-SDL_Keycode KeyboardControlsWindow::convertQtKeyToSDL(Qt::Key qtKey)
-{
-    switch(qtKey)
-    {
+SDL_Keycode KeyboardControlsWindow::convertQtKeyToSDL(Qt::Key qtKey) {
+    switch (qtKey) {
     case Qt::Key_A:
         return SDLK_A;
     case Qt::Key_B:
@@ -523,22 +570,18 @@ SDL_Keycode KeyboardControlsWindow::convertQtKeyToSDL(Qt::Key qtKey)
     }
 }
 
-void KeyboardControlsWindow::onEditingFinished()
-{
+void KeyboardControlsWindow::onEditingFinished() {
     auto sender = qobject_cast<QKeySequenceEdit*>(QObject::sender());
     auto new_keySequence = sender->keySequence();
 
     // If new key sequence is empty - skip 'duplicate' checks
-    if (new_keySequence == QKeySequence())
-    {
+    if (new_keySequence == QKeySequence()) {
         return;
     }
 
     // Check if sequance is not already used (i.e. making sure there are not duplicates)
-    for (auto &keyEdit : m_listOfKeySequenceEdits)
-    {
-        if (keyEdit != sender && new_keySequence == keyEdit->keySequence())
-        {
+    for (auto& keyEdit : m_listOfKeySequenceEdits) {
+        if (keyEdit != sender && new_keySequence == keyEdit->keySequence()) {
             sender->clear();
             sender->setStyleSheet("background-color: red");
             QTimer::singleShot(2000, sender, [sender]() {

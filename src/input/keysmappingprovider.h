@@ -8,8 +8,7 @@
 
 #include "input/keys_constants.h"
 
-class KeysMappingProvider
-{
+class KeysMappingProvider {
 public:
     KeysMappingProvider(std::map<Uint32, KeysMapping> bindingsMap);
 
