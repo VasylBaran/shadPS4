@@ -26,8 +26,6 @@ KeyboardControlsWindow::KeyboardControlsWindow(QWidget* parent)
     : QDialog(parent), ui(new Ui::KeyboardControlsWindow), m_settings("ShadPS4_Corp", "ShadPS4") {
     ui->setupUi(this);
 
-    centerText();
-
     qRegisterMetaType<QKeyBindingsQMap>();
 
     auto keysSettingsMap = m_settings.value(keyBindingsSettingsKey).value<QKeyBindingsQMap>();
@@ -179,6 +177,24 @@ KeyboardControlsWindow::KeyboardControlsWindow(QWidget* parent)
                      [this]() { validateAndSaveKeyBindings(); });
 
     QObject::connect(ui->cancelButton, &QPushButton::clicked, [this]() { this->close(); });
+
+    QList<QKeySequenceEdit*> keySequenceEdits = {
+        ui->StartKeySequenceEdit,        ui->SelectKeySequenceEdit,
+        ui->LAnalogDownkeySequenceEdit,  ui->LAnalogLeftkeySequenceEdit,
+        ui->LAnalogUpkeySequenceEdit,    ui->LAnalogRightkeySequenceEdit,
+        ui->PSkeySequenceEdit,           ui->RAnalogDownkeySequenceEdit,
+        ui->RAnalogLeftkeySequenceEdit,  ui->RAnalogUpkeySequenceEdit,
+        ui->RAnalogRightkeySequenceEdit, ui->DPadLeftkeySequenceEdit,
+        ui->DPadRightkeySequenceEdit,    ui->DPadUpkeySequenceEdit,
+        ui->DPadDownkeySequenceEdit,     ui->L2keySequenceEdit,
+        ui->L1keySequenceEdit,           ui->CrossKeySequenceEdit,
+        ui->R2KeySequenceEdit,           ui->CircleKeySequenceEdit,
+        ui->R1KeySequenceEdit,           ui->SquareKeySequenceEdit,
+        ui->TriangleKeySequenceEdit};
+
+    for (auto edit : keySequenceEdits) {
+        edit->setStyleSheet("QLineEdit { qproperty-alignment: AlignCenter; }");
+    }
 }
 
 KeyboardControlsWindow::~KeyboardControlsWindow() {
@@ -587,34 +603,15 @@ void KeyboardControlsWindow::onEditingFinished() {
             sender->clear();
             sender->setStyleSheet("background-color: red");
             QTimer::singleShot(2000, sender, [sender]() {
-                sender->setStyleSheet(""); // Reset to default
+                sender->setStyleSheet(
+                    "QLineEdit { qproperty-alignment: AlignCenter; }"); // Reset to default
             });
 
             keyEdit->setStyleSheet("background-color: red");
             QTimer::singleShot(2000, keyEdit, [keyEdit]() {
-                keyEdit->setStyleSheet(""); // Reset to default
+                keyEdit->setStyleSheet(
+                    "QLineEdit { qproperty-alignment: AlignCenter; }"); // Reset to default
             });
         }
-    }
-    centerText();
-}
-
-void KeyboardControlsWindow::centerText() {
-    QList<QKeySequenceEdit*> keySequenceEdits = {
-        ui->StartKeySequenceEdit,        ui->SelectKeySequenceEdit,
-        ui->LAnalogDownkeySequenceEdit,  ui->LAnalogLeftkeySequenceEdit,
-        ui->LAnalogUpkeySequenceEdit,    ui->LAnalogRightkeySequenceEdit,
-        ui->PSkeySequenceEdit,           ui->RAnalogDownkeySequenceEdit,
-        ui->RAnalogLeftkeySequenceEdit,  ui->RAnalogUpkeySequenceEdit,
-        ui->RAnalogRightkeySequenceEdit, ui->DPadLeftkeySequenceEdit,
-        ui->DPadRightkeySequenceEdit,    ui->DPadUpkeySequenceEdit,
-        ui->DPadDownkeySequenceEdit,     ui->L2keySequenceEdit,
-        ui->L1keySequenceEdit,           ui->CrossKeySequenceEdit,
-        ui->R2KeySequenceEdit,           ui->CircleKeySequenceEdit,
-        ui->R1KeySequenceEdit,           ui->SquareKeySequenceEdit,
-        ui->TriangleKeySequenceEdit};
-
-    for (auto edit : keySequenceEdits) {
-        edit->setStyleSheet("QLineEdit { qproperty-alignment: AlignCenter; }");
     }
 }
