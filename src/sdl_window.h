@@ -4,6 +4,7 @@
 #pragma once
 
 #include "common/types.h"
+#include "keysmappingprovider.h"
 
 struct SDL_Window;
 union SDL_Event;
@@ -60,6 +61,8 @@ public:
 
     void waitEvent();
 
+    void setKeysMappingProvider(KeysMappingProvider *provider);
+
 private:
     void onResize();
     void onKeyPress(const SDL_Event* event);
@@ -70,6 +73,7 @@ private:
     Input::GameController* controller;
     WindowSystemInfo window_info{};
     SDL_Window* window{};
+    KeysMappingProvider *keysMappingProvider = nullptr;
     bool is_shown{};
     bool is_open{true};
 };

@@ -504,6 +504,10 @@ set(QT_GUI
     src/qt_gui/main_window_themes.cpp
     src/qt_gui/main_window_themes.h
     src/qt_gui/main.cpp
+    src/qt_gui/keyboardcontrolswindow.h
+    src/qt_gui/keyboardcontrolswindow.cpp
+    src/qt_gui/keyboardcontrolswindow.ui
+
     ${EMULATOR}
     ${RESOURCE_FILES}
     )
@@ -519,6 +523,8 @@ if (ENABLE_QT_GUI)
         ${SHADER_RECOMPILER}
         ${VIDEO_CORE}
         ${EMULATOR}
+        keysmappingprovider.h keysmappingprovider.cpp
+        keys_constants.h
     )
 else()
     add_executable(shadps4

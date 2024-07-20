@@ -10,6 +10,7 @@
 #include "core/linker.h"
 #include "input/controller.h"
 #include "sdl_window.h"
+#include "keysmappingprovider.h"
 
 namespace Core {
 
@@ -27,6 +28,8 @@ public:
 
     void Run(const std::filesystem::path& file);
 
+    void setKeysMappingProvider(std::unique_ptr<KeysMappingProvider> provider);
+
 private:
     void LoadSystemModules(const std::filesystem::path& file);
 
@@ -34,6 +37,7 @@ private:
     Input::GameController* controller = Common::Singleton<Input::GameController>::Instance();
     Core::Linker* linker = Common::Singleton<Core::Linker>::Instance();
     Frontend::WindowSDL window;
+    std::unique_ptr<KeysMappingProvider> m_keysMappingProvider;
 };
 
 } // namespace Core

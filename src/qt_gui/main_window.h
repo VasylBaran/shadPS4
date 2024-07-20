@@ -23,6 +23,7 @@
 #include "main_window_themes.h"
 #include "main_window_ui.h"
 #include "pkg_viewer.h"
+#include "keyboardcontrolswindow.h"
 
 class GameListFrame;
 
@@ -39,12 +40,15 @@ public:
     void InstallDragDropPkg(std::filesystem::path file, int pkgNum, int nPkg);
     void InstallDirectory();
 
+    std::map<Uint32, KeysMapping> getKeysMapping();
+
 private Q_SLOTS:
     void ConfigureGuiFromSettings();
     void SaveWindowState() const;
     void SearchGameTable(const QString& text);
     void RefreshGameTable();
     void HandleResize(QResizeEvent* event);
+    void keyboardConfigurationButtonPressed();
 
 private:
     Ui_MainWindow* ui;
@@ -77,6 +81,7 @@ private:
     QScopedPointer<ElfViewer> m_elf_viewer;
     // Status Bar.
     QScopedPointer<QStatusBar> statusBar;
+    QScopedPointer<KeyboardControlsWindow> m_keyboardControlsDialog;
 
     PSF psf;
 
